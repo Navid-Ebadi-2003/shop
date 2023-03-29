@@ -23,5 +23,13 @@ public class user extends admin {
         this.wallet = wallet;
     }
 
+    public void add_product(String name , int n){
+        shopping_cart.put(name , n);
+    }
+
+    public void done(){
+        history.add(shopping_cart);
+        shopping_cart.clear();
+    }
 
 }
