@@ -27,6 +27,10 @@ public class product {
         return price;
     }
 
+    public String getSellerName() {
+        return sellerName;
+    }
+
     public int getQuantity() {
         return quantity;
     }

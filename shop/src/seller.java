@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class seller extends admin{
 
-    private double wallet=0;
+    private double wallet=0.00;
 
     private ArrayList<String> products = new ArrayList<String>();
 
@@ -11,7 +11,7 @@ public class seller extends admin{
     }
 
     public void add_product(String nameOfP){
-        products.add(nameOfP);
+        products.add(nameOfP);  // ?
     }
 
     public double getWallet() {

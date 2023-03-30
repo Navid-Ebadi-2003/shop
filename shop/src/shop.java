@@ -4,6 +4,8 @@ import java.util.Scanner;
 public class shop {
     static void runMenu(){
 
+        double shop_wallet=0.00;
+
         ArrayList<user> users= new ArrayList<user>();
         ArrayList<seller> sellers= new ArrayList<seller>();
         ArrayList<admin> admins = new ArrayList<admin>();
@@ -19,6 +21,7 @@ public class shop {
         users.add(new user("puria" , "puuu1392" , "moon@gmail.com" , "09126463222" , "tehran"));
         users.add(new user("nima" , "niii1390" , "nik@gmail.com" , "09386463101" , "tabriz"));
 
+        //Product names must be different
         products.add(new product("macbook m1" , "laptop" , 899.99 , 12 , "apple"));
         products.add(new product("macbook m2" , "laptop" , 1099.99 , 8 , "apple"));
         products.add(new product("galaxy book 2023" , "laptop" , 1049.99 , 15 , "samsung"));
@@ -167,17 +170,130 @@ public class shop {
                                 }
                                 ram.clear();
                             }
-
-
-
                         } //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                         else if (command1==2){
+                            boolean repeat1 = true;
+                            while (repeat1) {
+
+                                User.show_cart();
+                                int command2 = in.nextInt();
+                                in.nextLine();
+
+                                if (command2 == 1) {
+
+                                    System.out.println("print the product name: ");
+                                    String nameOfP =in.nextLine();
+
+                                    if(User.getShopping_cart().containsKey(nameOfP)){
+
+                                        System.out.println("1.increase the number");
+                                        System.out.println("2.reduce the number");
+
+                                        int order = in.nextInt();
+                                        in.nextLine();
+
+                                        product TheP = new product("","", 0.00, 0, "");
+                                        for (product i : products){
+                                            if(i.getName().equals(nameOfP)){
+                                                TheP=i;
+                                            }
+                                        }
+
+                                        if(order==1 || order==2) {
+                                            System.out.println("how many:");
+                                            int CHnumber = in.nextInt();
+                                            in.nextLine();
+
+                                            if(order==1){
+
+                                                if(CHnumber<=TheP.getQuantity()){
+                                                    if(CHnumber*TheP.getPrice()<=User.getWallet()){
+                                                        User.getShopping_cart().replace(nameOfP , User.getShopping_cart().get(nameOfP)+CHnumber);
+                                                        User.setWallet(User.getWallet()-CHnumber*TheP.getPrice());
+                                                        TheP.setQuantity(TheP.getQuantity()-CHnumber);
+                                                    }
+                                                    else{
+                                                        System.out.println("There is not enough money in the wallet");
+                                                    }
+                                                }
+                                                else {
+                                                    System.out.println("out of stock");
+                                                }
+                                            }
+                                            else if (order==2) {
+
+                                                if(CHnumber>0 && CHnumber<=User.getShopping_cart().get(nameOfP)){
+
+                                                    User.getShopping_cart().replace(nameOfP , User.getShopping_cart().get(nameOfP)-CHnumber);
+                                                    User.setWallet(User.getWallet()+CHnumber*TheP.getPrice());
+                                                    TheP.setQuantity(TheP.getQuantity()+CHnumber);
+                                                }
+                                                else {
+                                                    System.err.println("out of stock");
+                                                }
+                                            }
+                                        }
+                                        else {
+                                            System.err.println("wrong answer");
+                                        }
+                                    }
+                                    else {
+                                        System.err.println("this item does not exist in your cart");
+                                    }
+
+                                } else if (command2 == 2) {
+
+                                    ArrayList <product>ram = new ArrayList<product>();
+                                    ArrayList <Integer>Nram = new ArrayList<Integer>();
+
+                                    for(String i : User.getShopping_cart().keySet()){
+                                        for(product g : products){
+                                            if(i.equals(g.getName())){
+                                                ram.add(g);
+                                                Nram.add(User.getShopping_cart().get(i));
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    for(int i =0 ; i<ram.size();i++){
+                                        for(seller g : sellers){
+                                            if (ram.get(i).getSellerName().equals(g.getName())){
+                                                g.setWallet(g.getWallet()+(Nram.get(i)*ram.get(i).getPrice()*0.9));
+                                                shop_wallet+=(Nram.get(i)*ram.get(i).getPrice()*0.1);
+                                            }
+                                        }
+                                    }
+
+                                    User.done();
+                                    System.out.println("done");
+
+                                } else {
+                                    break;
+                                }
+                            }
 
                         } //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                         else if (command1==3){
 
                         } //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                         else if (command1==4){
+
+                            System.out.println(User.getWallet());
+                            System.out.println("1.charge wallet");
+                            System.out.println("0.back");
+
+                            int order=in.nextInt();
+                            in.nextLine();
+
+                            if(order==1){
+                                System.out.println("The amount of money you put($): ");
+                                int money = in.nextInt();
+                                in.nextLine();
+
+                                User.setWallet(User.getWallet()+money);
+                                System.out.println("done");
+                            }
 
                         } //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                         else {
