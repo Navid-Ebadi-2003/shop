@@ -12,7 +12,7 @@ public class shop {
 
         ArrayList<product> products = new ArrayList<product>();
 
-        admins.add(new admin("navid" , "1308" , "naghost7@gmail.com"));
+        admins.add(new admin("navid" , "1313" , "naghost7@gmail.com"));
 
         sellers.add(new seller("adidas", "7878" , "adidas@gmail.com"));
         sellers.add(new seller("apple", "4567" , "apple@gmail.com"));
@@ -44,6 +44,7 @@ public class shop {
             System.out.println("2.sign up as user");
             System.out.println("3.sign up as seller");
             System.out.println("4.sign up as admin");
+            System.out.println("5.turn off");
 
             int command = in.nextInt();
             in.nextLine();
@@ -75,6 +76,7 @@ public class shop {
                 for( user i : users){
                     if (i.getName().equals(name)){
                         User = i;
+                        break;
                     }
                 }
 
@@ -126,6 +128,7 @@ public class shop {
                                 }
                                 else{
                                     System.out.println("go to the shopping cart to finalize or change the purchase");
+                                    System.out.println(" ");
                                     break;
                                 }
 
@@ -196,6 +199,7 @@ public class shop {
                                         for (product i : products){
                                             if(i.getName().equals(nameOfP)){
                                                 TheP=i;
+                                                break;
                                             }
                                         }
 
@@ -211,6 +215,7 @@ public class shop {
                                                         User.getShopping_cart().replace(nameOfP , User.getShopping_cart().get(nameOfP)+CHnumber);
                                                         User.setWallet(User.getWallet()-CHnumber*TheP.getPrice());
                                                         TheP.setQuantity(TheP.getQuantity()-CHnumber);
+                                                        System.out.println("done");
                                                     }
                                                     else{
                                                         System.out.println("There is not enough money in the wallet");
@@ -227,6 +232,11 @@ public class shop {
                                                     User.getShopping_cart().replace(nameOfP , User.getShopping_cart().get(nameOfP)-CHnumber);
                                                     User.setWallet(User.getWallet()+CHnumber*TheP.getPrice());
                                                     TheP.setQuantity(TheP.getQuantity()+CHnumber);
+
+                                                    if(User.getShopping_cart().get(nameOfP)==0){
+                                                        User.getShopping_cart().remove(nameOfP);
+                                                    }
+                                                    System.out.println("done");
                                                 }
                                                 else {
                                                     System.err.println("out of stock");
@@ -261,12 +271,13 @@ public class shop {
                                             if (ram.get(i).getSellerName().equals(g.getName())){
                                                 g.setWallet(g.getWallet()+(Nram.get(i)*ram.get(i).getPrice()*0.9));
                                                 shop_wallet+=(Nram.get(i)*ram.get(i).getPrice()*0.1);
+                                                break;
                                             }
                                         }
                                     }
 
                                     User.done();
-                                    System.out.println("done");
+                                    break;
 
                                 } else {
                                     break;
@@ -275,6 +286,11 @@ public class shop {
 
                         } //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                         else if (command1==3){
+                            User.show_history();
+
+                            System.out.println("0.back");
+                            int order = in.nextInt();
+                            in.nextLine();
 
                         } //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                         else if (command1==4){
@@ -311,7 +327,69 @@ public class shop {
             } //********************************************************************************************************
             else if(command==4){
 
+                System.out.println("name: ");
+                String name = in.nextLine();
+                System.out.println("password: ");
+                String pass = in.nextLine();
+
+                admin Admin = new admin( "","","");
+                for( admin i : admins){
+                    if (i.getName().equals(name)){
+                        Admin = i;
+                        break;
+                    }
+                }
+
+                if (Admin.getPass().equals(pass)){
+
+                    boolean repeat = true;
+                    while (repeat){
+
+                        System.out.println("1.wallet shop");
+                        System.out.println("2.add new seller");
+                        System.out.println("3.add new admin");
+                        System.out.println("4.exit");
+
+                        int command1 = in.nextInt();
+                        in.nextLine();
+
+                        if(command1==1){
+                            System.out.println(shop_wallet);
+                            System.out.println("0.back");
+
+                            int order = in.nextInt();
+                            in.nextLine();
+
+                        }
+                        else if(command1==2 || command1==3){
+                            System.out.println("name: ");
+                            String Nname = in.nextLine();
+                            System.out.println("password: ");
+                            String Npass = in.nextLine();
+                            System.out.println("email: ");
+                            String email = in.nextLine();
+
+                            if(command1==2) {
+                                sellers.add(new seller(Nname, Npass, email));
+                            }
+                            else {
+                                admins.add(new admin(Nname, Npass, email));
+                            }
+                            System.out.println("done");
+                        }
+                        else {
+                            break;
+                        }
+                    }
+                }
+                else {
+                    System.err.println("name or password was wrong ");
+                }
+
             } //********************************************************************************************************
+            else if(command==5){
+                onOff=false;
+            }
             else{
                 System.err.println("wrong answer");
             }

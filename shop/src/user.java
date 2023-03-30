@@ -32,8 +32,9 @@ public class user extends admin {
     }
 
     public void done(){
-        history.add(shopping_cart);
+        history.add((HashMap<String, Integer>)shopping_cart.clone());
         shopping_cart.clear();
+        System.out.println("done");
     }
 
     public void show_cart(){
@@ -48,6 +49,20 @@ public class user extends admin {
             System.out.println("2.Finalize the purchase");
         }
         System.out.println("0.back");
+    }
+
+    public void show_history(){
+        if(history.isEmpty()){
+            System.out.println("empty");
+        }
+        else {
+            for(int i=0 ; i<history.size();i++){
+                System.out.println((i+1) + "########" + (i+1));
+                for(String g : history.get(i).keySet()){
+                    System.out.println("name: " + g + "    number: " + history.get(i).get(g));
+                }
+            }
+        }
     }
 
 }
