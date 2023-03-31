@@ -2,13 +2,13 @@ public class product {
 
     private String sellerName;
     private String name;
-    private  String categoty;
+    private  String category;
     private double price;
     private int quantity;
 
-    public product(String name, String categoty, double price, int quantity , String sellerName) {
+    public product(String name, String category, double price, int quantity , String sellerName) {
         this.name = name;
-        this.categoty = categoty;
+        this.category = category;
         this.price = price;
         this.quantity = quantity;
         this.sellerName=sellerName;
@@ -19,12 +19,16 @@ public class product {
         return name;
     }
 
-    public String getCategoty() {
-        return categoty;
+    public String getCategory() {
+        return category;
     }
 
     public double getPrice() {
         return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public String getSellerName() {

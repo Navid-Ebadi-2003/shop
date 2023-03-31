@@ -63,6 +63,7 @@ public class shop {
                 String address = in.nextLine();
 
                 users.add(new user(name , pass , email ,phone , address));
+                System.out.println("done");
 
             } //********************************************************************************************************
             else if (command==2){
@@ -136,7 +137,7 @@ public class shop {
                                 ArrayList <product>ram = new ArrayList<product>();
                                 int g =0;
                                 for(product i : products){
-                                    if(i.getCategoty().equals(cat)){
+                                    if(i.getCategory().equals(cat)){
                                         g++;
                                         System.out.print(g + ".");
                                         i.show();
@@ -323,6 +324,137 @@ public class shop {
 
             } //********************************************************************************************************
             else if (command==3){
+
+                System.out.println("name: ");
+                String name = in.nextLine();
+                System.out.println("password: ");
+                String pass = in.nextLine();
+
+                seller Seller = new seller( "","","");
+                for( seller i : sellers){
+                    if (i.getName().equals(name)){
+                        Seller = i;
+                        break;
+                    }
+                }
+
+                if (Seller.getPass().equals(pass)){
+                    boolean repeat = true;
+                    while (repeat){
+
+                        System.out.println("1.my wallet");
+                        System.out.println("2.change price");
+                        System.out.println("3.increase product inventory");
+                        System.out.println("4.add new product");
+                        System.out.println("5.exit");
+
+                        int command1 = in.nextInt();
+                        in.nextLine();
+
+                        if(command1==1){
+
+                            System.out.println(Seller.getWallet());
+                            System.out.println("0.back");
+
+                            int order = in.nextInt();
+                            in.nextLine();
+
+                        }
+                        else if(command1==2 || command1==3){
+
+                            ArrayList<product> ram = new ArrayList<product>();
+
+                            int g =0;
+                            for(product i : products){
+                                if(i.getSellerName().equals(name)){
+                                    g++;
+                                    System.out.println(g+"."+"name: "+i.getName()+"   quantity: "+i.getQuantity()+"   price: "+i.getPrice());
+                                    ram.add(i);
+                                }
+                            }
+                            if(ram.isEmpty()){
+                                System.out.println("there is no product");
+                            }
+                            System.out.println((g+1)+".back");
+
+                            int order = in.nextInt();
+                            in.nextLine();
+                            order-=1;
+
+                            if(order>=0 && order<ram.size()){
+
+                                if(command1==2){
+                                    System.out.println("print new price: ");
+                                    double newPrice = in.nextDouble();
+                                    in.nextLine();
+
+                                    ram.get(order).setPrice(newPrice);
+                                    System.out.println("done");
+
+                                }
+                                else {
+                                    System.out.println("how many: ");
+                                    int CHnumber = in.nextInt();
+                                    in.nextLine();
+
+                                    ram.get(order).setQuantity(ram.get(order).getQuantity()+CHnumber);
+                                    System.out.println("done");
+                                }
+                            }
+                        }
+                        else if(command1==4){
+
+                            System.out.println("name product: ");
+                            String nameP=in.nextLine();
+
+                            String cat ="";
+                            while (true) {
+                                System.out.println("categories: 1.laptop - 2.phone - 3.tv - 4.shoes - 5.shirt");
+                                int C = in.nextInt();
+                                in.nextLine();
+
+                                if(C==1){
+                                    cat="laptop";
+                                    break;
+                                }
+                                else if(C==2){
+                                    cat="phone";
+                                    break;
+                                }
+                                else if(C==3){
+                                    cat="tv";
+                                    break;
+                                }
+                                else if(C==4){
+                                    cat="shoes";
+                                    break;
+                                }
+                                else if (C==5){
+                                    cat="shirt";
+                                    break;
+                                }
+                                System.err.println("wrong answer");
+                            }
+                            System.out.println("price: ");
+                            double P = in.nextDouble();
+                            in.nextLine();
+                            System.out.println("quantity:");
+                            int Q = in.nextInt();
+                            in.nextLine();
+
+                            products.add(new product(nameP , cat , P , Q , name));
+                            System.out.println("done");
+
+                        }
+                        else {
+                            break;
+                        }
+
+                    }
+                }
+                else {
+                    System.err.println("name or password was wrong ");
+                }
 
             } //********************************************************************************************************
             else if(command==4){
