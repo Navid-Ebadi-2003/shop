@@ -40,10 +40,10 @@ public class shop {
 
         while (onOff){
 
-            System.out.println("1.sign in as user");
-            System.out.println("2.sign up as user");
-            System.out.println("3.sign up as seller");
-            System.out.println("4.sign up as admin");
+            System.out.println("1.sign up as user");
+            System.out.println("2.sign in as user");
+            System.out.println("3.sign in as seller");
+            System.out.println("4.sign in as admin");
             System.out.println("5.turn off");
 
             int command = in.nextInt();
@@ -51,8 +51,22 @@ public class shop {
 
             if(command==1){
 
-                System.out.println("name: ");
-                String name = in.nextLine();
+                String name = "";
+                boolean repeat = true;
+                while (repeat) {
+                    repeat=false;
+                    System.out.println("name: ");
+                    name = in.nextLine();
+
+                    for (user i : users) {
+                        if (i.getName().equals(name)) {
+                            System.out.println("this user already exists .");
+                            repeat = true;
+                            break;
+                        }
+                    }
+                }
+
                 System.out.println("password: ");
                 String pass = in.nextLine();
                 System.out.println("email: ");
